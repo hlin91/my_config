@@ -169,11 +169,14 @@ There are two things you can do about this warning:
 	    (local-set-key (kbd "C-z") 'undo)
 	    ))
 
-;; Some org-mode stuff. Decide on hotkeys for these later
-;; (global-set-key (kbd "c-l") 'org-store-link)
-;; (global-set-key (kbd "C-a") 'org-agenda)
-;; (global-set-key (kbd "C-c") 'org-capture)
-;; (global-set-key (kbd "C-b") 'org-switchb)
+;; org-mode keybindings
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-l") 'org-store-link)
+            (local-set-key (kbd "C-a") 'org-agenda)
+            (local-set-key (kbd "C-c") 'org-capture)
+            (local-set-key (kbd "C-b") 'org-switchb)
+            ))
 
 (provide '.emacs)
 ;;; .emacs ends here
