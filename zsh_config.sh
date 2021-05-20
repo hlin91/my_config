@@ -67,6 +67,15 @@ function hjdtrim # Trim out intro in jav videos from hjd2048
         { echo "hjdtrim: unknown command"; return 1 }
 }
 
+function javlink # Create symlinks for all jav files given and place them in the specified directory
+{
+    [[ $# > 1 ]] || { echo "javlink: usage: javlink [destination] [file ...]"; return 1 }
+    dest=$1
+    [ -d $dest ] || mkdir $dest
+    shift
+    for file in $@; do { filename=`basename $file`; fileext=${filename##*.}; ln -s $(pwd)/$file $dest/$(jav -o info $file).$fileext }; done
+}
+
 # Plug-ins
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Enable syntax-highlighting
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh # Enable auto-suggestions
