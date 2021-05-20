@@ -59,7 +59,8 @@ There are two things you can do about this warning:
     (progn
       (load-theme 'solarized-dark t)
       (nyan-mode 1)
-      (server-start))
+      (server-start)
+      ))
   )
 
 ;; (when (version<= "26.0.50" emacs-version ) ;; Display line numbers
@@ -93,6 +94,14 @@ There are two things you can do about this warning:
 (setq delete-by-moving-to-trash 1)
 
 (setq xwwp-search-prefix "https://duckduckgo.com/?q=")
+(defun dired-webkit-open ()
+  "Open a file in xwidgets webkit from dired mode"
+  (interactive)
+  (dired-copy-filename-as-kill 0)
+  (xwidget-webkit-browse-url (concat "file://" (current-kill 0))))
+(add-hook 'dired-mode-hook (lambda ()
+                             (local-set-key (kbd "C-c o") 'dired-webkit-open)
+                             ))
 
 ;;=========================================================================
 ;; Coding
