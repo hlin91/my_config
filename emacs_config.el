@@ -61,7 +61,6 @@ There are two things you can do about this warning:
       (nyan-mode 1)
       (server-start)
       ))
-  )
 
 ;; (when (version<= "26.0.50" emacs-version ) ;; Display line numbers
 ;;   (global-display-line-numbers-mode))
