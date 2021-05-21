@@ -32,7 +32,7 @@ There are two things you can do about this warning:
  '(inhibit-startup-screen t)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck better-shell bongo vterm swoop helm-swoop helm-ag god-mode elcord solarized-theme lsp-ui lsp-python-ms lsp-mode flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell vue-mode indent-guide neotree go-mode slime atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling ace-window flycheck))
+   '(smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck better-shell bongo vterm swoop helm-swoop helm-ag god-mode elcord solarized-theme lsp-ui lsp-python-ms lsp-mode flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell vue-mode indent-guide neotree go-mode slime atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling ace-window flycheck))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -79,12 +79,18 @@ There are two things you can do about this warning:
 (require 'smooth-scrolling)
 (smooth-scrolling-mode 1)
 
-(global-set-key (kbd "M-o") 'ace-window) ;; Bind ace-window to M-o
+(global-set-key (kbd "M-o") #'ace-window) ;; Bind ace-window to M-o
 (global-set-key (kbd "C-c z") #'zap-up-to-char)
 (global-set-key (kbd "M-p") #'backward-paragraph)
 (global-set-key (kbd "M-n") #'forward-paragraph)
 (global-set-key (kbd "C-c n") #'neotree)
 (global-set-key (kbd "C-c k") #'comment-or-uncomment-region)
+(global-set-key (kbd "C-c SPC") #'ace-jump-mode)
+(global-set-key (kbd "C-c  h") #'helm-browse-project)
+
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command) ;; Old M-x.
 
 (toggle-frame-fullscreen) ;; Start in full-screen
 
@@ -102,6 +108,7 @@ There are two things you can do about this warning:
                              (local-set-key (kbd "C-c o") 'dired-webkit-open)
                              ))
 
+(put 'dired-find-alternate-file 'disabled nil)
 ;;=========================================================================
 ;; Coding
 ;;=========================================================================
