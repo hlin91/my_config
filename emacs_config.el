@@ -32,7 +32,7 @@ There are two things you can do about this warning:
  '(inhibit-startup-screen t)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(evil-tutor evil with-editor smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck better-shell bongo vterm swoop helm-swoop helm-ag god-mode elcord solarized-theme lsp-ui lsp-python-ms lsp-mode flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell vue-mode indent-guide neotree go-mode slime atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling ace-window flycheck))
+   '(lsp use-package with-editor smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck better-shell bongo vterm swoop helm-swoop helm-ag god-mode elcord solarized-theme lsp-ui lsp-python-ms lsp-mode flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell vue-mode indent-guide neotree go-mode slime atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling ace-window flycheck))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -45,25 +45,38 @@ There are two things you can do about this warning:
 ;;=========================================================================
 ;; Theme and universal editor configurations
 ;;=========================================================================
-;;(load-theme 'Xcode-light)
-;;(load-theme 'atom-one-dark)
-;;(set-face-attribute 'default nil :height 160) ;; Change font size to 16pt
+(setq byte-compile-warnings '(cl-functions))
+;; Set up use-package for auto-installing packages
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+(use-package auto-package-update
+  :defer 10
+  :config
+  ;; Delete residual old versions
+  (setq auto-package-update-delete-old-versions t)
+  ;; Do not bother me when updates have taken place.
+  (setq auto-package-update-hide-results t)
+  ;; Update installed packages at startup if there is an update pending.
+  (auto-package-update-maybe))
+
 (setq auto-window-vscroll nil)
 (set-face-attribute 'default nil :font "Meslo LG L DZ for Powerline" :height 160)
-(add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
-(load-theme 'solarized t)
-(set-terminal-parameter nil 'background-mode 'dark)
 
-;; Evaluate these functions only when booting into the GUI
+(use-package nyan-mode)
 (if window-system
     (progn
       (load-theme 'solarized-dark t)
       (nyan-mode 1)
-      (server-start)
-      ))
+      (server-start))
+  (progn
+    (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
+    (load-theme 'solarized t)
+    (set-terminal-parameter nil 'background-mode 'dark)))
 
-;; (when (version<= "26.0.50" emacs-version ) ;; Display line numbers
-;;   (global-display-line-numbers-mode))
+(when (version<= "26.0.50" emacs-version ) ;; Display line numbers
+  (global-display-line-numbers-mode))
 ;; Add indent guides
  (indent-guide-global-mode)
 
@@ -73,39 +86,48 @@ There are two things you can do about this warning:
 ;; (require 'elcord)
 ;; (elcord-mode) ;; Discord rich presence
 
-;;(require 'powerline) ;; Enable powerline
+;;(use-package powerline) ;; Enable powerline
 ;;(powerline-vim-theme)
 
-(require 'pdf-view-restore)
-(add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
+(use-package pdf-view-restore
+  :hook (pdf-view-mode . pdf-view-restore-mode))
 
-(require 'smooth-scrolling)
+(use-package smooth-scrolling)
 (smooth-scrolling-mode 1)
 
-(require 'god-mode)
-(global-set-key (kbd "C-c g") #'god-mode-all)
-(global-set-key (kbd "M-o") #'ace-window) ;; Bind ace-window to M-o
+(use-package god-mode
+  :bind (("C-c g" . god-mode-all)))
+(use-package ace-window
+  :bind (("M-o" . ace-window)))
 (global-set-key (kbd "C-c z") #'zap-up-to-char)
 (global-set-key (kbd "M-p") #'backward-paragraph)
 (global-set-key (kbd "M-n") #'forward-paragraph)
-(global-set-key (kbd "C-c n") #'neotree)
+(use-package neotree
+  :config (global-set-key (kbd "C-c n") #'neotree)
+  :custom (neo-smart-open t))
 (global-set-key (kbd "C-c k") #'comment-or-uncomment-region)
-(global-set-key (kbd "C-c SPC") #'ace-jump-mode)
-(global-set-key (kbd "C-c  h") #'helm-browse-project)
+(use-package ace-jump-mode
+  :config (global-set-key (kbd "C-c SPC") #'ace-jump-mode))
+(use-package helm
+  :config (global-set-key (kbd "C-c h") #'helm-browse-project))
 
-(require 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command) ;; Old M-x.
+(use-package smex
+  :config
+  (smex-initialize)
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)) ;; Old M-x.
 
 (toggle-frame-fullscreen) ;; Start in full-screen
 
-(osx-clipboard-mode 1)
-(osx-trash-setup)
-(setq delete-by-moving-to-trash 1)
+(use-package osx-clipboard
+  :config (osx-clipboard-mode 1))
+(use-package osx-trash
+  :config (osx-trash-setup)
+  :custom (delete-by-moving-to-trash 1))
 
-(setq xwwp-search-prefix "https://duckduckgo.com/?q=")
+(use-package xwwp
+  :custom (xwwp-search-prefix "https://duckduckgo.com/?q="))
 (defun dired-webkit-open ()
   "Open a file in xwidgets webkit from dired mode"
   (interactive)
@@ -119,25 +141,35 @@ There are two things you can do about this warning:
 ;;=========================================================================
 ;; Coding
 ;;=========================================================================
+;; scrub-mode is a macro for several modes to make coding easier
+(use-package flycheck)
+(use-package company)
+(use-package fic-mode)
+(use-package lsp-mode)
+(define-minor-mode scrub-mode "Coding for zoomers.")
+(add-hook 'scrub-mode-hook 'flycheck-mode)
+(add-hook 'scrub-mode-hook 'company-mode)
+(add-hook 'scrub-mode-hook 'fic-mode)
+(add-hook 'scrub-mode-hook #'lsp)
 
 ;; Correctly locate brew installed packages
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
-(setq neo-smart-open t) ;; Enable smart open for neotree
 (setq-default indent-tabs-mode nil) ;; Don't use tabs to indent
 (setq c-basic-offset 4)
 
 ;; Company mode auto completion settings
-(setq company-idle-delay 0)
-(setq company-minimum-prefix-length 2)
-(setq company-selection-wrap-around t)
+(use-package company
+  :custom
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 2)
+  (setq company-selection-wrap-around t))
 
 (add-hook 'prog-mode-hook #'recentf-mode)
 (add-hook 'prog-mode-hook (lambda () (setq fill-column 100)))
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode) ;; Get line ruler column
 (add-hook 'prog-mode-hook 'fic-mode) ;; TODO highlighting
-(add-hook 'go-mode-hook (lambda () (setq-default tab-width 4))) ;; Set tab width to 4 for Go mode
 (defun my-go-mode-hook () ;; Custom go hooks
   ; Use goimports instead of go-fmt
   (setq gofmt-command "goimports")
@@ -150,33 +182,30 @@ There are two things you can do about this warning:
   ; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump)
   (local-set-key (kbd "M-*") 'pop-tag-mark)
-)
-(add-hook 'go-mode-hook 'my-go-mode-hook)
+  )
+(use-package go-mode
+  :config
+  (add-hook 'go-mode-hook (lambda () (setq-default tab-width 4))) ;; Set tab width to 4 for Go mode
+  (add-hook 'go-mode-hook 'my-go-mode-hook))
+
 
 (add-hook 'text-mode-hook 'flyspell-mode) ;; Add spell check to text mode
 (add-hook 'text-mode-hook 'visual-line-mode) ;; Add line wrap to text mode
 (add-hook 'text-mode-hook (lambda () (setq fill-column 200)))
 
-;; scrub-mode is a macro for several modes to make coding easier
-(require 'flycheck)
-(require 'company)
-(require 'fic-mode)
-(require 'lsp)
-(define-minor-mode scrub-mode "Coding for zoomers.")
-(add-hook 'scrub-mode-hook 'flycheck-mode)
-(add-hook 'scrub-mode-hook 'company-mode)
-(add-hook 'scrub-mode-hook 'fic-mode)
-(add-hook 'scrub-mode-hook #'lsp)
+(use-package with-editor
+  :config
+  (add-hook 'shell-mode-hook  'with-editor-export-editor)
+  (add-hook 'eshell-mode-hook 'with-editor-export-editor)
+  (add-hook 'term-exec-hook   'with-editor-export-editor)
+  (add-hook 'vterm-mode-hook  'with-editor-export-editor)  )
 
-(add-hook 'shell-mode-hook  'with-editor-export-editor)
-(add-hook 'eshell-mode-hook 'with-editor-export-editor)
-(add-hook 'term-exec-hook   'with-editor-export-editor)
-(add-hook 'vterm-mode-hook  'with-editor-export-editor)
 
 ;;=========================================================================
 ;; Misc
 ;;=========================================================================
 ;; Some LaTeX stuff
+(use-package flyspell)
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
