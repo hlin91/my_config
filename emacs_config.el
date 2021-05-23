@@ -14,7 +14,7 @@ There are two things you can do about this warning:
 2. Remove this warning from your init file so you won't see it again."))
   ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+  ;; (add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
   (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t) ;; org-mode packages
   (when (< emacs-major-version 24)
     ;; For important compatibility libraries like cl-lib
@@ -32,7 +32,7 @@ There are two things you can do about this warning:
  '(inhibit-startup-screen t)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck better-shell bongo vterm swoop helm-swoop helm-ag god-mode elcord solarized-theme lsp-ui lsp-python-ms lsp-mode flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell vue-mode indent-guide neotree go-mode slime atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling ace-window flycheck))
+   '(evil-tutor evil with-editor smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck better-shell bongo vterm swoop helm-swoop helm-ag god-mode elcord solarized-theme lsp-ui lsp-python-ms lsp-mode flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell vue-mode indent-guide neotree go-mode slime atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling ace-window flycheck))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -70,15 +70,20 @@ There are two things you can do about this warning:
 (electric-pair-mode 1) ;; Enable electric-pair-mode
 (show-paren-mode) ;; Highlight matching parentheses
 
-(require 'elcord)
-(elcord-mode) ;; Discord rich presence
+;; (require 'elcord)
+;; (elcord-mode) ;; Discord rich presence
 
 ;;(require 'powerline) ;; Enable powerline
 ;;(powerline-vim-theme)
 
+(require 'pdf-view-restore)
+(add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
+
 (require 'smooth-scrolling)
 (smooth-scrolling-mode 1)
 
+(require 'god-mode)
+(global-set-key (kbd "C-c g") #'god-mode-all)
 (global-set-key (kbd "M-o") #'ace-window) ;; Bind ace-window to M-o
 (global-set-key (kbd "C-c z") #'zap-up-to-char)
 (global-set-key (kbd "M-p") #'backward-paragraph)
@@ -88,13 +93,15 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-c SPC") #'ace-jump-mode)
 (global-set-key (kbd "C-c  h") #'helm-browse-project)
 
+(require 'smex)
+(smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command) ;; Old M-x.
 
 (toggle-frame-fullscreen) ;; Start in full-screen
 
-(osx-clipboard-mode +1)
+(osx-clipboard-mode 1)
 (osx-trash-setup)
 (setq delete-by-moving-to-trash 1)
 
@@ -112,8 +119,6 @@ There are two things you can do about this warning:
 ;;=========================================================================
 ;; Coding
 ;;=========================================================================
-(require 'god-mode)
-(global-set-key (kbd "C-c i") #'god-mode-all)
 
 ;; Correctly locate brew installed packages
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
@@ -162,6 +167,11 @@ There are two things you can do about this warning:
 (add-hook 'scrub-mode-hook 'company-mode)
 (add-hook 'scrub-mode-hook 'fic-mode)
 (add-hook 'scrub-mode-hook #'lsp)
+
+(add-hook 'shell-mode-hook  'with-editor-export-editor)
+(add-hook 'eshell-mode-hook 'with-editor-export-editor)
+(add-hook 'term-exec-hook   'with-editor-export-editor)
+(add-hook 'vterm-mode-hook  'with-editor-export-editor)
 
 ;;=========================================================================
 ;; Misc

@@ -10,6 +10,7 @@ function cleanmega # Delete the mega.nz cache in Opera
 # Coding stuff
 export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/2.7.0/bin:$PATH"
 alias emacs='emacs -nw'
+alias emacsclient="/usr/local/Cellar/emacs-plus\\@27/27.2/bin/emacsclient" # Use the emacs-plus emacsclient binary
 alias ecli='emacsclient -n'
 # For LLVM
 LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
@@ -56,7 +57,7 @@ function vrscale # Scale a VR video to 2880p
     for file in $@; do ffmpeg -i $file -vf scale=2880:-1 $(basename $file .mp4)-scaled.mp4 && rm $file; done
 }
 
-function hjdtrim # Trim out intro in jav videos from hjd2048
+function hjdtrim # Trim out ad intros in jav videos
 {
     [[ $# > 1 ]] || { echo "hdjtrim: usage: hdjtrim [short/long] [file ...]"; return 1 }
     { [[ $1 == "long" ]] && { shift; for file in $@; do { ffmpeg -y -i $file -ss 00:01:52 -c copy $file-trimmed.mp4 && rm $file }; done } } ||
@@ -73,7 +74,7 @@ function javlink # Create symlinks for all jav files given and place them in the
     dest=$1
     [ -d $dest ] || mkdir $dest
     shift
-    for file in $@; do { filename=`basename $file`; fileext=${filename##*.}; ln -s $(pwd)/$file $dest/$(jav -o info $file).$fileext }; done
+    for file in $@; do { filename=`basename $file`; fileext=${filename##*.}; ln -sf $(pwd)/$file $dest/$(jav -o info $file).$fileext }; done
 }
 
 # Plug-ins
