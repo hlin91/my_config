@@ -32,7 +32,7 @@ There are two things you can do about this warning:
  '(inhibit-startup-screen t)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(lsp use-package with-editor smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck better-shell bongo vterm swoop helm-swoop helm-ag god-mode elcord solarized-theme lsp-ui lsp-python-ms lsp-mode flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell vue-mode indent-guide neotree go-mode slime atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling ace-window flycheck))
+   '(lsp use-package with-editor smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag god-mode elcord solarized-theme lsp-ui lsp-python-ms lsp-mode flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell vue-mode indent-guide neotree go-mode slime atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling ace-window flycheck))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -64,8 +64,9 @@ There are two things you can do about this warning:
 (setq auto-window-vscroll nil)
 (set-face-attribute 'default nil :font "Meslo LG L DZ for Powerline" :height 160)
 
+(use-package solarized-theme)
 (use-package nyan-mode)
-(if window-system
+(if window-system ;; GUI specific configuration
     (progn
       (load-theme 'solarized-dark t)
       (nyan-mode 1)
@@ -89,6 +90,8 @@ There are two things you can do about this warning:
 ;;(use-package powerline) ;; Enable powerline
 ;;(powerline-vim-theme)
 
+(use-package vterm)
+
 (use-package pdf-view-restore
   :hook (pdf-view-mode . pdf-view-restore-mode))
 
@@ -109,7 +112,9 @@ There are two things you can do about this warning:
 (use-package ace-jump-mode
   :config (global-set-key (kbd "C-c SPC") #'ace-jump-mode))
 (use-package helm
-  :config (global-set-key (kbd "C-c h") #'helm-browse-project))
+  :config
+  (global-set-key (kbd "C-c h") #'helm-browse-project)
+  (global-set-key (kbd "C-x b") #'helm-buffers-list))
 
 (use-package smex
   :config
@@ -141,11 +146,15 @@ There are two things you can do about this warning:
 ;;=========================================================================
 ;; Coding
 ;;=========================================================================
+(use-package indent-guide)
 ;; scrub-mode is a macro for several modes to make coding easier
 (use-package flycheck)
 (use-package company)
 (use-package fic-mode)
-(use-package lsp-mode)
+(use-package lsp-mode
+  :custom
+  (lsp-prefer-flymake nil))
+(use-package lsp-ui)
 (define-minor-mode scrub-mode "Coding for zoomers.")
 (add-hook 'scrub-mode-hook 'flycheck-mode)
 (add-hook 'scrub-mode-hook 'company-mode)
@@ -169,7 +178,7 @@ There are two things you can do about this warning:
 (add-hook 'prog-mode-hook #'recentf-mode)
 (add-hook 'prog-mode-hook (lambda () (setq fill-column 100)))
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode) ;; Get line ruler column
-(add-hook 'prog-mode-hook 'fic-mode) ;; TODO highlighting
+(add-hook 'prog-mode-hook 'fic-mode)
 (defun my-go-mode-hook () ;; Custom go hooks
   ; Use goimports instead of go-fmt
   (setq gofmt-command "goimports")
@@ -198,7 +207,7 @@ There are two things you can do about this warning:
   (add-hook 'shell-mode-hook  'with-editor-export-editor)
   (add-hook 'eshell-mode-hook 'with-editor-export-editor)
   (add-hook 'term-exec-hook   'with-editor-export-editor)
-  (add-hook 'vterm-mode-hook  'with-editor-export-editor)  )
+  (add-hook 'vterm-mode-hook  'with-editor-export-editor))
 
 
 ;;=========================================================================
@@ -222,8 +231,7 @@ There are two things you can do about this warning:
             (local-set-key (kbd "<f17>") 'artist-select-op-line)     ; f17 = line
 	    (local-set-key (kbd "<f18>") 'artist-select-op-square)   ; f18 = rectangle
 	    (local-set-key (kbd "<f19>") 'artist-select-op-ellipse)  ; f19 = ellipse
-	    (local-set-key (kbd "C-z") 'undo)
-	    ))
+	    (local-set-key (kbd "C-z") 'undo)))
 
 ;; org-mode keybindings
 (add-hook 'org-mode-hook
@@ -231,8 +239,7 @@ There are two things you can do about this warning:
             (local-set-key (kbd "C-l") 'org-store-link)
             (local-set-key (kbd "C-a") 'org-agenda)
             (local-set-key (kbd "C-c") 'org-capture)
-            (local-set-key (kbd "C-b") 'org-switchb)
-            ))
+            (local-set-key (kbd "C-b") 'org-switchb)))
 
 (provide '.emacs)
 ;;; .emacs ends here
