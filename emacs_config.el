@@ -141,7 +141,9 @@ There are two things you can do about this warning:
   "Open a file in xwidgets webkit from dired mode"
   (interactive)
   (dired-copy-filename-as-kill 0)
-  (xwidget-webkit-browse-url (concat "file://" (current-kill 0))))
+  (xwidget-webkit-browse-url (concat "file://" (current-kill 0)))
+  (let ((b (get-buffer "*xwidget-webkit*")))
+    (if b (switch-to-buffer b))))
 (add-hook 'dired-mode-hook (lambda ()
                              (local-set-key (kbd "C-c o") 'dired-webkit-open)
                              ))
