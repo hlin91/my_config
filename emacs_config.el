@@ -64,9 +64,10 @@ There are two things you can do about this warning:
 (setq auto-window-vscroll nil)
 (set-face-attribute 'default nil :font "Meslo LG L DZ for Powerline" :height 160)
 
+;; GUI specific configuration
 (use-package solarized-theme)
 (use-package nyan-mode)
-(if window-system ;; GUI specific configuration
+(if window-system
     (progn
       (load-theme 'solarized-dark t)
       (nyan-mode 1)
@@ -92,6 +93,7 @@ There are two things you can do about this warning:
 
 (use-package vterm)
 
+(use-package pdf-tools)
 (use-package pdf-view-restore
   :hook (pdf-view-mode . pdf-view-restore-mode))
 
@@ -100,17 +102,21 @@ There are two things you can do about this warning:
 
 (use-package god-mode
   :bind (("C-c g" . god-mode-all)))
+
 (use-package ace-window
   :bind (("M-o" . ace-window)))
 (global-set-key (kbd "C-c z") #'zap-up-to-char)
 (global-set-key (kbd "M-p") #'backward-paragraph)
 (global-set-key (kbd "M-n") #'forward-paragraph)
+
 (use-package neotree
   :config (global-set-key (kbd "C-c n") #'neotree)
   :custom (neo-smart-open t))
 (global-set-key (kbd "C-c k") #'comment-or-uncomment-region)
+
 (use-package ace-jump-mode
   :config (global-set-key (kbd "C-c SPC") #'ace-jump-mode))
+
 (use-package helm
   :config
   (global-set-key (kbd "C-c h") #'helm-browse-project)
@@ -122,8 +128,6 @@ There are two things you can do about this warning:
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)) ;; Old M-x.
-
-(toggle-frame-fullscreen) ;; Start in full-screen
 
 (use-package osx-clipboard
   :config (osx-clipboard-mode 1))
@@ -143,6 +147,7 @@ There are two things you can do about this warning:
                              ))
 
 (put 'dired-find-alternate-file 'disabled nil)
+(toggle-frame-fullscreen) ;; Start in full-screen
 ;;=========================================================================
 ;; Coding
 ;;=========================================================================
