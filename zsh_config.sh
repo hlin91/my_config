@@ -17,10 +17,12 @@ LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 #export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
+
 export GOPATH="/Users/Harvey/go"
 export PATH="$(go env GOPATH)/bin:$PATH"
 export EDITOR='emacs'
 export TERM=xterm-256color
+alias jav='~/bin/jav'
 
 function crun # Build and run a .c or .cpp file
 {
