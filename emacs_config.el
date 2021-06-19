@@ -153,9 +153,8 @@ There are two things you can do about this warning:
 ;;=========================================================================
 ;; Coding
 ;;=========================================================================
-;; Correctly locate brew installed packages
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-(setq exec-path (append exec-path '("/usr/local/bin")))
+(use-package exec-path-from-shell
+  :config (exec-path-from-shell-initialize))
 
 (setq-default indent-tabs-mode nil) ;; Don't use tabs to indent
 (setq c-basic-offset 4)
