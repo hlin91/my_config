@@ -91,7 +91,8 @@ There are two things you can do about this warning:
 ;;(use-package powerline) ;; Enable powerline
 ;;(powerline-vim-theme)
 
-(use-package vterm)
+(use-package vterm
+  :config (global-set-key (kbd "C-c t") #'vterm))
 
 (use-package pdf-tools)
 (use-package pdf-view-restore
