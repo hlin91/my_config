@@ -76,7 +76,7 @@ function javlink # Create symlinks for all jav files given and place them in the
     dest=$1
     [ -d $dest ] || mkdir $dest
     shift
-    for file in $@; do { filename=`basename $file`; fileext=${filename##*.}; ln -sf $(pwd)/$file $dest/$(jav -o info $file).$fileext }; done
+    for file in $@; do { filename=`basename $file`; fileext=${filename##*.}; ln -sf $(pwd)/$file $dest/$(jav -o title $file).$fileext }; done
 }
 
 # Plug-ins
