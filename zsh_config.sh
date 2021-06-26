@@ -79,6 +79,24 @@ function javlink # Create symlinks for all jav files given and place them in the
     for file in $@; do { filename=`basename $file`; fileext=${filename##*.}; ln -sf $(pwd)/$file $dest/$(jav -o title $file).$fileext }; done
 }
 
+function mvtodir # Move all specified files to a specified directory
+{
+    [[ $# > 1 ]] || { echo "mvtodir: usage: mvtodir [destination] [file ...]"; return 1 }
+    dest=$1
+    [ -d $dest ] || mkdir $dest
+    shift
+    for file in $@; do { mv $file $dest/$file }; done
+}
+
+function cptodir # Copy all specified files to a specified directory
+{
+    [[ $# > 1 ]] || { echo "cptodir: usage: cptodir [destination] [file ...]"; return 1 }
+    dest=$1
+    [ -d $dest ] || mkdir $dest
+    shift
+    for file in $@; do { cp $file $dest/$file }; done
+}
+
 # Plug-ins
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Enable syntax-highlighting
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh # Enable auto-suggestions
