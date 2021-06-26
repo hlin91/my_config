@@ -64,14 +64,15 @@ There are two things you can do about this warning:
 (setq auto-window-vscroll nil)
 (set-face-attribute 'default nil :font "Meslo LG L DZ for Powerline" :height 160)
 
-;; GUI specific configuration
 (use-package solarized-theme)
 (use-package nyan-mode)
 (if window-system
+    ;; GUI specific configuration
     (progn
       (load-theme 'solarized-dark t)
       (nyan-mode 1)
       (server-start))
+  ;; Terminal specific configuration
   (progn
     (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
     (load-theme 'solarized t)
