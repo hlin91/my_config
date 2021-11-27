@@ -81,6 +81,7 @@ There are two things you can do about this warning:
 (when (version<= "26.0.50" emacs-version ) ;; Display line numbers
   (global-display-line-numbers-mode))
 ;; Add indent guides
+(use-package indent-guide)
  (indent-guide-global-mode)
 
 (electric-pair-mode 1) ;; Enable electric-pair-mode
