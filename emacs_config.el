@@ -34,7 +34,8 @@ There are two things you can do about this warning:
  '(package-selected-packages
    '(tree-sitter-langs tree-sitter lsp-mode helm lsp-ui lsp use-package with-editor smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag god-mode elcord solarized-theme lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell vue-mode indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling ace-window flycheck))
  '(show-paren-mode t)
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(warning-suppress-types '((comp) (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -173,6 +174,7 @@ There are two things you can do about this warning:
 (use-package lsp-ui)
 (use-package tree-sitter)
 (use-package tree-sitter-langs)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 (define-minor-mode scrub-mode "Coding for zoomers.")
 (add-hook 'scrub-mode-hook 'flycheck-mode)
 (add-hook 'scrub-mode-hook 'company-mode)
