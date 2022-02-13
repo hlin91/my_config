@@ -9,8 +9,8 @@ function cleanmega # Delete the mega.nz cache in Opera
 
 # Coding stuff
 export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/2.7.0/bin:$PATH"
-alias emacs='emacs -nw'
-alias emacsclient="/usr/local/Cellar/emacs-plus\\@27/27.2/bin/emacsclient" # Use the emacs-plus emacsclient binary
+# alias emacs='emacs -nw'
+# alias emacsclient="/usr/local/Cellar/emacs-plus\\@27/27.2/bin/emacsclient" # Use the emacs-plus emacsclient binary
 alias ecli='emacsclient -n'
 # For LLVM
 LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"

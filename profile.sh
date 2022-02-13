@@ -6,3 +6,4 @@ calpoly=$school/calpoly
 jav=/Volumes/JAV
 downloads=/Volumes/HP/@downloads
 EDITOR=emacs
+. "$HOME/.cargo/env"
