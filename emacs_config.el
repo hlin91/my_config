@@ -119,7 +119,7 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-c k") #'comment-or-uncomment-region)
 
 (use-package ace-jump-mode
-  :config (global-set-key (kbd "C-c SPC") #'ace-jump-mode))
+  :config (global-set-key (kbd "C-c C-SPC") #'ace-jump-mode))
 
 (use-package helm
   :config
