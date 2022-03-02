@@ -75,6 +75,9 @@ There are two things you can do about this warning:
     (set-face-background 'default "unspecified-bg" (selected-frame))))
 (add-hook 'window-setup-hook 'on-after-init)
 
+(unless window-system
+  (xterm-mouse-mode))
+
 (when (version<= "26.0.50" emacs-version ) ;; Display line numbers
   (global-display-line-numbers-mode))
 ;; Add indent guides
