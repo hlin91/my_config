@@ -9,14 +9,14 @@ function cleanmega # Delete the mega.nz cache in Opera
 
 # Coding stuff
 export PATH="/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/2.7.0/bin:$PATH"
-# alias emacs='emacs -nw'
-# alias emacsclient="/usr/local/Cellar/emacs-plus\\@27/27.2/bin/emacsclient" # Use the emacs-plus emacsclient binary
+alias emacs='/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs'
+alias emacsclient="/Applications/MacPorts/Emacs.app/Contents/MacOS/bin/emacsclient" # Use the emacs-plus emacsclient binary
 alias ecli='emacsclient -n'
 # For LLVM
-LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
-export PATH="/usr/local/opt/llvm/bin:$PATH"
-#export LDFLAGS="-L/usr/local/opt/llvm/lib"
-export CPPFLAGS="-I/usr/local/opt/llvm/include"
+# LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
+# export PATH="/usr/local/opt/llvm/bin:$PATH"
+# export LDFLAGS="-L/usr/local/opt/llvm/lib"
+# export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
 export GOPATH="/Users/Harvey/go"
 export PATH="$(go env GOPATH)/bin:$PATH"
@@ -85,18 +85,25 @@ function mvtodir # Move all specified files to a specified directory
     dest=$1
     [ -d $dest ] || mkdir $dest
     shift
-    for file in $@; do { mv $file $dest/$file }; done
+    for file in $@; do
+        mv $file $dest/$file
+    done
 }
 
 function cptodir # Copy all specified files to a specified directory
 {
     [[ $# > 1 ]] || { echo "cptodir: usage: cptodir [destination] [file ...]"; return 1 }
     dest=$1
-    [ -d $dest ] || mkdir $dest
+    [ -d $dest ] || mkdir -p $dest
     shift
-    for file in $@; do { cp $file $dest/$file }; done
+    for file in $@; do
+        cp $file $dest/$file
+    done
 }
 
 # Plug-ins
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Enable syntax-highlighting
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh # Enable auto-suggestions
+
+# nvm
+source /opt/local/share/nvm/init-nvm.sh
