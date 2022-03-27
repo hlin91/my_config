@@ -17,7 +17,7 @@ alias ecli='emacsclient -n'
 # export PATH="/usr/local/opt/llvm/bin:$PATH"
 # export LDFLAGS="-L/usr/local/opt/llvm/lib"
 # export CPPFLAGS="-I/usr/local/opt/llvm/include"
-
+export EMACS_THEME="LIGHT"
 export GOPATH="/Users/Harvey/go"
 export PATH="$(go env GOPATH)/bin:$PATH"
 export EDITOR='emacs'

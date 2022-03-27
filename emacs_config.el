@@ -32,7 +32,7 @@ There are two things you can do about this warning:
  '(inhibit-startup-screen t)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(leuven-theme doom-themes rust-mode rainbow-delimiters solarized-theme ace-window tree-sitter-langs tree-sitter lsp-mode helm lsp-ui lsp use-package with-editor smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag god-mode elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
+   '(projectile leuven-theme doom-themes rust-mode rainbow-delimiters solarized-theme ace-window tree-sitter-langs tree-sitter lsp-mode helm lsp-ui lsp use-package with-editor smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag god-mode elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(warning-suppress-types '((comp) (comp))))
@@ -76,7 +76,7 @@ There are two things you can do about this warning:
 (add-hook 'window-setup-hook 'on-after-init)
 
 (unless window-system
-  (xterm-mouse-mode))
+  (xterm-mouse-mode 1))
 
 (when (version<= "26.0.50" emacs-version ) ;; Display line numbers
   (global-display-line-numbers-mode))
@@ -108,13 +108,15 @@ There are two things you can do about this warning:
 
 (use-package ace-window
   :bind (("M-o" . ace-window)))
+
 (global-set-key (kbd "C-c C-z") #'zap-up-to-char)
 (global-set-key (kbd "M-p") #'backward-paragraph)
 (global-set-key (kbd "M-n") #'forward-paragraph)
 
 (use-package neotree
-  :config (global-set-key (kbd "C-c C-n") #'neotree)
+  :config (global-set-key (kbd "C-c C-n") #'neotree-toggle)
   :custom (neo-smart-open t))
+
 (global-set-key (kbd "C-c C-k") #'comment-or-uncomment-region)
 
 (use-package ace-jump-mode
@@ -162,6 +164,8 @@ There are two things you can do about this warning:
                               (interactive)
                               (insert-char #x5c)
                               ))
+
+(use-package projectile)
 
 (use-package exec-path-from-shell
   :config (exec-path-from-shell-initialize))
@@ -221,7 +225,6 @@ There are two things you can do about this warning:
 (use-package rust-mode
   :config
   (add-hook 'rust-mode-hook 'rust-enable-format-on-save))
-
 
 (add-hook 'text-mode-hook 'flyspell-mode) ;; Add spell check to text mode
 (add-hook 'text-mode-hook 'visual-line-mode) ;; Add line wrap to text mode
