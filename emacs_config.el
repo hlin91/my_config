@@ -27,12 +27,12 @@ There are two things you can do about this warning:
  ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
  '(custom-safe-themes
-   '("3d54650e34fa27561eb81fc3ceed504970cc553cfd37f46e8a80ec32254a3ec3" "246a9596178bb806c5f41e5b571546bb6e0f4bd41a9da0df5dfbca7ec6e2250c" "1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4" "b186688fbec5e00ee8683b9f2588523abdf2db40562839b2c5458fcfb322c8a4" "aba75724c5d4d0ec0de949694bce5ce6416c132bb031d4e7ac1c4f2dbdd3d580" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "3e200d49451ec4b8baa068c989e7fba2a97646091fd555eca0ee5a1386d56077" "833ddce3314a4e28411edf3c6efde468f6f2616fc31e17a62587d6a9255f4633" "d89e15a34261019eec9072575d8a924185c27d3da64899905f8548cbd9491a36" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "171d1ae90e46978eb9c342be6658d937a83aaa45997b1d7af7657546cae5985b" "7922b14d8971cce37ddb5e487dbc18da5444c47f766178e5a4e72f90437c0711" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "13a8eaddb003fd0d561096e11e1a91b029d3c9d64554f8e897b2513dbf14b277" "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "efeac8a7737b192859b0683bb97a5c2e4c600101dccda67b78a424fc9a738b75" "4d553fbd7fa02bedfb17e8107680f56e1aa952c073f389c780a5aeaa4896867a" default))
+   '("8146edab0de2007a99a2361041015331af706e7907de9d6a330a3493a541e5a6" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "333958c446e920f5c350c4b4016908c130c3b46d590af91e1e7e2a0611f1e8c5" "cf922a7a5c514fad79c483048257c5d8f242b21987af0db813d3f0b138dfaf53" "3d54650e34fa27561eb81fc3ceed504970cc553cfd37f46e8a80ec32254a3ec3" "246a9596178bb806c5f41e5b571546bb6e0f4bd41a9da0df5dfbca7ec6e2250c" "1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4" "b186688fbec5e00ee8683b9f2588523abdf2db40562839b2c5458fcfb322c8a4" "aba75724c5d4d0ec0de949694bce5ce6416c132bb031d4e7ac1c4f2dbdd3d580" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "3e200d49451ec4b8baa068c989e7fba2a97646091fd555eca0ee5a1386d56077" "833ddce3314a4e28411edf3c6efde468f6f2616fc31e17a62587d6a9255f4633" "d89e15a34261019eec9072575d8a924185c27d3da64899905f8548cbd9491a36" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "171d1ae90e46978eb9c342be6658d937a83aaa45997b1d7af7657546cae5985b" "7922b14d8971cce37ddb5e487dbc18da5444c47f766178e5a4e72f90437c0711" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "13a8eaddb003fd0d561096e11e1a91b029d3c9d64554f8e897b2513dbf14b277" "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" "efeac8a7737b192859b0683bb97a5c2e4c600101dccda67b78a424fc9a738b75" "4d553fbd7fa02bedfb17e8107680f56e1aa952c073f389c780a5aeaa4896867a" default))
  '(global-display-line-numbers-mode t)
  '(inhibit-startup-screen t)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(projectile leuven-theme doom-themes rust-mode rainbow-delimiters solarized-theme ace-window tree-sitter-langs tree-sitter lsp-mode helm lsp-ui lsp use-package with-editor smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag god-mode elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
+   '(git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters solarized-theme ace-window tree-sitter-langs tree-sitter lsp-mode helm lsp-ui lsp use-package with-editor smex ace-jump-mode xwwp osx-clipboard osx-trash pdf-view-restore pdf-tools howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag god-mode elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(warning-suppress-types '((comp) (comp))))
@@ -63,17 +63,22 @@ There are two things you can do about this warning:
   (auto-package-update-maybe))
 
 (setq auto-window-vscroll nil)
-(set-face-attribute 'default nil :font "Meslo LG L DZ for Powerline" :height 160)
+(set-face-attribute 'default nil :height 160)
 
 (use-package solarized-theme)
 (use-package doom-themes)
 (use-package nyan-mode)
 
-(load-theme 'doom-flatwhite t)
+;; (load-theme 'doom-flatwhite t)
+(load-theme 'doom-xcode)
 (defun on-after-init ()
   (unless (display-graphic-p (selected-frame))
     (set-face-background 'default "unspecified-bg" (selected-frame))))
 (add-hook 'window-setup-hook 'on-after-init)
+
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
 
 (unless window-system
   (xterm-mouse-mode 1))
@@ -82,7 +87,7 @@ There are two things you can do about this warning:
   (global-display-line-numbers-mode))
 ;; Add indent guides
 (use-package indent-guide)
- (indent-guide-global-mode)
+(indent-guide-global-mode)
 
 (electric-pair-mode 1) ;; Enable electric-pair-mode
 (show-paren-mode) ;; Highlight matching parentheses
@@ -134,11 +139,17 @@ There are two things you can do about this warning:
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)) ;; Old M-x.
 
-(use-package osx-clipboard
-  :config (osx-clipboard-mode 1))
-(use-package osx-trash
-  :config (osx-trash-setup)
-  :custom (delete-by-moving-to-trash 1))
+;; (use-package osx-clipboard
+;;   :config (osx-clipboard-mode 1))
+;; (use-package osx-trash
+;;   :config (osx-trash-setup)
+;;   :custom (delete-by-moving-to-trash 1))
+
+;; Get the backslash key back on JP keyboards
+;; (global-set-key (kbd "M-¥") (lambda ()
+;;                               (interactive)
+;;                               (insert-char #x5c)
+;;                               ))
 
 (use-package xwwp
   :custom (xwwp-search-prefix "https://duckduckgo.com/?q="))
@@ -156,14 +167,13 @@ There are two things you can do about this warning:
 (use-package rainbow-delimiters)
 
 (put 'dired-find-alternate-file 'disabled nil)
-(toggle-frame-maximized) ;; Start with full sized window
 ;;=========================================================================
 ;; Coding
 ;;=========================================================================
-(global-set-key (kbd "M-¥") (lambda ()
-                              (interactive)
-                              (insert-char #x5c)
-                              ))
+
+(use-package git-gutter
+  :custom
+  (global-git-gutter-mode 1))
 
 (use-package projectile)
 
