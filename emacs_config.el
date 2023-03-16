@@ -228,7 +228,8 @@ There are two things you can do about this warning:
 ;;   (global-set-key (kbd "M-p") #'backward-paragraph) ;; LSP overwrites these so have to declare again here
 ;;   (global-set-key (kbd "M-n") #'forward-paragraph))
 ;; (use-package lsp-ui)
-(use-package eglot)
+(use-package eglot
+  :autoload eglot)
 (use-package tree-sitter
   :autoload tree-sitter-mode)
 (use-package tree-sitter-langs
