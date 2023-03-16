@@ -32,8 +32,11 @@ There are two things you can do about this warning:
  '(global-display-line-numbers-mode t)
  '(inhibit-startup-screen t)
  '(line-number-mode nil)
+ '(minimap-mode t)
+ '(minimap-width-fraction 0.05)
+ '(minimap-window-location 'right)
  '(package-selected-packages
-   '(hydra eglot multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters solarized-theme ace-window tree-sitter-langs tree-sitter lsp-mode lsp-ui lsp use-package with-editor smex ace-jump-mode osx-clipboard osx-trash howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
+   '(minimap hydra eglot multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters solarized-theme ace-window tree-sitter-langs tree-sitter lsp-mode lsp-ui lsp use-package with-editor smex ace-jump-mode osx-clipboard osx-trash howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
  '(select-enable-clipboard t)
  '(show-paren-mode t)
  '(tool-bar-mode nil)
@@ -189,6 +192,8 @@ There are two things you can do about this warning:
 ;;=========================================================================
 ;; Coding
 ;;=========================================================================
+(use-package minimap
+  :autoload minimap-mode)
 (use-package multiple-cursors
   :config
   (global-set-key (kbd "C-M-l") 'mc/edit-lines)
@@ -219,15 +224,6 @@ There are two things you can do about this warning:
   :autoload flycheck-mode)
 (use-package fic-mode
   :autoload fic-mode)
-;; (use-package lsp-mode
-;;   :custom
-;;   (lsp-prefer-flymake nil)
-;;   (setq read-process-output-max (* 1024 1024))
-;;   (setq lsp-idle-delay 1.0)
-;;   (setq lsp-log-io nil)
-;;   (global-set-key (kbd "M-p") #'backward-paragraph) ;; LSP overwrites these so have to declare again here
-;;   (global-set-key (kbd "M-n") #'forward-paragraph))
-;; (use-package lsp-ui)
 (use-package eglot
   :autoload eglot)
 (use-package tree-sitter
@@ -247,6 +243,7 @@ There are two things you can do about this warning:
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode) ;; Get line ruler column
 (add-hook 'prog-mode-hook 'fic-mode)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
 (defun my-go-mode-hook () ;; Custom go hooks
   ; Use goimports instead of go-fmt
   (setq gofmt-command "goimports")
@@ -270,11 +267,6 @@ There are two things you can do about this warning:
   :autoload rust-mode
   :config
   (add-hook 'rust-mode-hook 'rust-enable-format-on-save))
-
-;; (use-package lsp-python-ms
-;;   :ensure t
-;;   :init (setq lsp-python-ms-auto-install-server t)
-;;   )
 
 (add-hook 'text-mode-hook 'flyspell-mode) ;; Add spell check to text mode
 (add-hook 'text-mode-hook 'visual-line-mode) ;; Add line wrap to text mode
