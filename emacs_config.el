@@ -32,9 +32,6 @@ There are two things you can do about this warning:
  '(global-display-line-numbers-mode t)
  '(inhibit-startup-screen t)
  '(line-number-mode nil)
- '(minimap-mode t)
- '(minimap-width-fraction 0.05)
- '(minimap-window-location 'right)
  '(package-selected-packages
    '(minimap hydra eglot multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters solarized-theme ace-window tree-sitter-langs tree-sitter lsp-mode lsp-ui lsp use-package with-editor smex ace-jump-mode osx-clipboard osx-trash howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
  '(select-enable-clipboard t)
@@ -129,7 +126,13 @@ There are two things you can do about this warning:
     (progn
       (setq x-select-enable-clipboard 1)
       (server-start)
-      (set-frame-size-according-to-resolution)))
+      (set-frame-size-according-to-resolution)
+      (use-package minimap
+        :autoload minimap-mode
+        :config
+        (setq minimap-width-fraction 0.01)
+        (setq minimap-window-location 'right)
+        (setq minimap-minimum-width 10))))
 
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -211,8 +214,6 @@ There are two things you can do about this warning:
 ;;=========================================================================
 ;; Coding
 ;;=========================================================================
-(use-package minimap
-  :autoload minimap-mode)
 (use-package multiple-cursors
   :config
   (global-set-key (kbd "C-M-l") 'mc/edit-lines)
