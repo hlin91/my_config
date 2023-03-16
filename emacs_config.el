@@ -126,6 +126,7 @@ There are two things you can do about this warning:
 ;; (elcord-mode) ;; Discord rich presence
 
 (use-package vterm
+  :autoload vterm
   :config (global-set-key (kbd "C-c C-t") #'vterm))
 
 (use-package smooth-scrolling)
@@ -209,12 +210,15 @@ There are two things you can do about this warning:
 (use-package indent-guide)
 ;; Company mode auto completion settings
 (use-package company
+  :autoload company-mode
   :config
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 2)
   (setq company-selection-wrap-around t))
-(use-package flycheck)
-(use-package fic-mode)
+(use-package flycheck
+  :autoload flycheck-mode)
+(use-package fic-mode
+  :autoload fic-mode)
 ;; (use-package lsp-mode
 ;;   :custom
 ;;   (lsp-prefer-flymake nil)
@@ -225,8 +229,11 @@ There are two things you can do about this warning:
 ;;   (global-set-key (kbd "M-n") #'forward-paragraph))
 ;; (use-package lsp-ui)
 (use-package eglot)
-(use-package tree-sitter)
-(use-package tree-sitter-langs)
+(use-package tree-sitter
+  :autoload tree-sitter-mode)
+(use-package tree-sitter-langs
+  :autoload tree-sitter-mode
+  :requires tree-sitter)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 ;; scrub-mode is a macro for several modes to make coding easier
 (define-minor-mode scrub-mode "Coding for zoomers.")
@@ -253,11 +260,13 @@ There are two things you can do about this warning:
   (local-set-key (kbd "M-*") 'pop-tag-mark)
   )
 (use-package go-mode
+  :autoload go-mode
   :config
   (add-hook 'go-mode-hook (lambda () (setq-default tab-width 4))) ;; Set tab width to 4 for Go mode
   (add-hook 'go-mode-hook 'my-go-mode-hook))
 
 (use-package rust-mode
+  :autoload rust-mode
   :config
   (add-hook 'rust-mode-hook 'rust-enable-format-on-save))
 
@@ -279,6 +288,7 @@ There are two things you can do about this warning:
 
 (use-package hydra)
 (use-package gdscript-mode
+  :autoload gdscript-mode
   :config
   (add-hook 'gdscript-mode-hook 'flycheck-mode)
   (add-hook 'gdscript-mode-hook 'company-mode))
