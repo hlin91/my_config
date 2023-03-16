@@ -71,7 +71,7 @@ There are two things you can do about this warning:
 (setq use-package-always-ensure t)
 (use-package async)
 (use-package auto-package-update
-  :defer 10
+  :defer 100
   :config
   ;; Delete residual old versions
   (setq auto-package-update-delete-old-versions t)
