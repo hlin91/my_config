@@ -33,7 +33,7 @@ There are two things you can do about this warning:
  '(inhibit-startup-screen t)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(minimap hydra eglot multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters solarized-theme ace-window tree-sitter-langs tree-sitter lsp-mode lsp-ui lsp use-package with-editor smex ace-jump-mode osx-clipboard osx-trash howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
+   '(all-the-icons writegood-mode minimap hydra eglot multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters solarized-theme ace-window tree-sitter-langs tree-sitter lsp-mode lsp-ui lsp use-package with-editor smex ace-jump-mode osx-clipboard osx-trash howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
  '(select-enable-clipboard t)
  '(show-paren-mode t)
  '(tool-bar-mode nil)
@@ -164,8 +164,12 @@ There are two things you can do about this warning:
 (global-set-key (kbd "M-p") #'backward-paragraph)
 (global-set-key (kbd "M-n") #'forward-paragraph)
 
+(use-package all-the-icons
+  :if (display-graphic-p))
 (use-package neotree
-  :config (global-set-key (kbd "C-c C-n") #'neotree-toggle)
+  :config
+  (global-set-key (kbd "C-c C-n") #'neotree-toggle)
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
   :custom (neo-smart-open t))
 
 (global-set-key (kbd "C-c C-k") #'comment-or-uncomment-region)
@@ -238,7 +242,7 @@ There are two things you can do about this warning:
   :autoload company-mode
   :config
   (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 2)
+  (setq company-minimum-prefix-length 1)
   (setq company-selection-wrap-around t))
 (use-package flycheck
   :autoload flycheck-mode)
@@ -313,7 +317,10 @@ There are two things you can do about this warning:
 ;; Misc
 ;;=========================================================================
 ;; Some LaTeX stuff
-(use-package flyspell)
+(use-package flyspell
+  :autoload flyspell-mode)
+(use-package writegood-mode
+  :autoload writegood-mode)
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
