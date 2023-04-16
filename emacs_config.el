@@ -33,7 +33,7 @@ There are two things you can do about this warning:
  '(inhibit-startup-screen t)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(helm-grepint consult-eglot consult-flycheck embark-consult consult-embark embark consult catppuccin-theme powerline all-the-icons writegood-mode minimap hydra eglot multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window tree-sitter-langs tree-sitter lsp-mode lsp-ui lsp use-package with-editor smex ace-jump-mode osx-clipboard osx-trash howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
+   '(helm-c-yasnippet yasnippet-snippets yasnippet helm-grepint consult-eglot consult-flycheck embark-consult consult-embark embark consult catppuccin-theme powerline all-the-icons writegood-mode minimap hydra eglot multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window tree-sitter-langs tree-sitter lsp-mode lsp-ui lsp use-package with-editor smex ace-jump-mode osx-clipboard osx-trash howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
  '(powerline-default-separator 'rounded)
  '(powerline-gui-use-vcs-glyph t)
  '(select-enable-clipboard t)
@@ -234,7 +234,16 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-c C-k") #'comment-or-uncomment-region)
 
 (use-package ace-jump-mode
-  :config (global-set-key (kbd "C-c C-SPC") #'ace-jump-mode))
+  :bind
+  (("C-c C-SPC" . ace-jump-mode)))
+
+(use-package avy
+  :bind
+  (("C-:" . avy-goto-char)
+   ("C-'" . avy-goto-char-2)
+   ("M-g f" . avy-goto-line)
+   ("M-g w" . avy-goto-word-1)
+   ("M-g e" . avy-goto-word-0)))
 
 (use-package helm
   :defer t
@@ -299,6 +308,18 @@ There are two things you can do about this warning:
 ;;=========================================================================
 ;; Coding
 ;;=========================================================================
+(use-package yasnippet
+  :autoload
+  ((yas-global-mode)
+   (yas-minor-mode)))
+(use-package yasnippet-snippets
+  :autoload
+  ((yas-global-mode)
+   (yas-minor-mode)))
+(use-package helm-c-yasnippet
+  :bind
+  (("C-c y" . helm-yas-complete)))
+
 (use-package multiple-cursors
   :defer t
   :config
@@ -345,6 +366,7 @@ There are two things you can do about this warning:
 (add-hook 'scrub-mode-hook 'flycheck-mode)
 (add-hook 'scrub-mode-hook 'company-mode)
 (add-hook 'scrub-mode-hook 'tree-sitter-mode)
+(add-hook 'prog-mode-hook 'yas-global-mode)
 
 (add-hook 'prog-mode-hook #'recentf-mode)
 (add-hook 'prog-mode-hook (lambda () (setq fill-column 140)))
