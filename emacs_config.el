@@ -34,7 +34,7 @@ There are two things you can do about this warning:
  '(inhibit-startup-screen t)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(esup helm-c-yasnippet yasnippet-snippets yasnippet helm-grepint consult-eglot consult-flycheck embark-consult consult-embark embark consult catppuccin-theme powerline all-the-icons writegood-mode minimap hydra eglot multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window tree-sitter-langs tree-sitter lsp-mode lsp-ui lsp use-package with-editor smex ace-jump-mode osx-clipboard osx-trash howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
+   '(undo-tree esup helm-c-yasnippet yasnippet-snippets yasnippet helm-grepint consult-eglot consult-flycheck embark-consult consult-embark embark consult catppuccin-theme powerline all-the-icons writegood-mode minimap hydra eglot multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window tree-sitter-langs tree-sitter lsp-mode lsp-ui lsp use-package with-editor smex ace-jump-mode osx-clipboard osx-trash howdoi nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord lsp-python-ms flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
  '(powerline-default-separator 'rounded)
  '(powerline-gui-use-vcs-glyph t)
  '(select-enable-clipboard t)
@@ -145,6 +145,8 @@ There are two things you can do about this warning:
 (setq auto-window-vscroll nil)
 (set-face-attribute 'default nil :height 160)
 
+(use-package hydra)
+
 (use-package doom-themes
   :defer t)
 (use-package catppuccin-theme
@@ -217,7 +219,9 @@ There are two things you can do about this warning:
   (smooth-scrolling-mode 1))
 
 (use-package ace-window
-  :bind(("M-o" . ace-window)))
+  :bind
+  (("M-o" . ace-window)
+   ("C-c M-o" . ace-swap-window)))
 
 (use-package all-the-icons
   :defer t
@@ -260,7 +264,7 @@ There are two things you can do about this warning:
   (bind-key "M-X" 'smex-major-mode-commands)
   (bind-key "C-c C-c M-x" 'execute-extended-command)
   :config
-  (smex-initialize)) ;; Old M-x.
+  (smex-initialize))
 
 ;; Get the backslash key back on JP keyboards
 ;; (global-set-key (kbd "M-¥") (lambda ()
@@ -288,7 +292,8 @@ There are two things you can do about this warning:
   (("M-RET" . embark-act)))
 
 (use-package consult
-  :defer t)
+  :bind
+  (("M-g g" . consult-goto-line)))
 (use-package consult-flycheck
   :defer t)
 (use-package consult-eglot
@@ -299,6 +304,15 @@ There are two things you can do about this warning:
 (put 'dired-find-alternate-file 'disabled nil)
 
 (global-auto-revert-mode t)
+
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode)
+  (defhydra hydra-undo (global-map "C-c u")
+  "Undo tree hydra"
+  ("u" undo-tree-undo "undo")
+  ("r" undo-tree-redo "redo")
+  ("v" undo-tree-visualize "visualize")))
 
 ;;=========================================================================
 ;; Coding
@@ -410,8 +424,6 @@ There are two things you can do about this warning:
 ;;   (add-hook 'term-exec-hook   'with-editor-export-editor)
 ;;   (add-hook 'vterm-mode-hook  'with-editor-export-editor))
 
-(use-package hydra
-  :defer t)
 (use-package gdscript-mode
   :autoload gdscript-mode
   :config
@@ -420,6 +432,21 @@ There are two things you can do about this warning:
 
 ;; (set-face-background 'font-lock-comment-face "#fef3bd") ;; Highlight comments to make them more visible
 
+;;=========================================================================
+;; Hydras
+;;=========================================================================
+(defhydra hydra-smerge (global-map "C-c C-c s")
+  ("s" smerge-start-session "start-session")
+  ("u" smerge-keep-upper "keep-upper")
+  ("l" smerge-keep-lower "keep-lower")
+  ("a" smerge-keep-all "keep-all")
+  ("n" smerge-next "next"))
+
+(defhydra hydra-window-resize (global-map "C-c C-c w")
+  ("w" enlarge-window "grow-vertically")
+  ("s" shrink-window "shrink-vertically")
+  ("d" enlarge-window-horizontally "grow-horizontally")
+  ("a" shrink-window-horizontally "shrink-horizontally"))
 
 ;;=========================================================================
 ;; Misc
