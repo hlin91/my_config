@@ -315,7 +315,6 @@ There are two things you can do about this warning:
   :config
   (indent-guide-global-mode 1))
 
-
 (electric-pair-mode 1) ;; Enable electric-pair-mode
 (show-paren-mode) ;; Highlight matching parentheses
 
