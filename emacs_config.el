@@ -460,11 +460,7 @@ There are two things you can do about this warning:
   (("C-c y" . helm-yas-complete)))
 
 (use-package multiple-cursors
-  :defer t
-  :config
-  (global-set-key (kbd "C-M-l") 'mc/edit-lines)
-  (global-unset-key (kbd "C-M-<mouse-1>"))
-  (global-set-key (kbd "C-M-<mouse-1>") 'mc/add-cursor-on-click))
+  :defer t)
 
 (use-package git-gutter
   :config
@@ -574,6 +570,13 @@ There are two things you can do about this warning:
   ("a" shrink-window-horizontally "shrink-horizontally")
   ("p" scroll-other-window-down "scroll-other-window-down")
   ("n" scroll-other-window "scroll-other-window"))
+
+(defhydra hydra-mc (global-map "C-c m")
+  ("p" mc/mark-previous-like-this "mark-previous-like-this")
+  ("n" mc/mark-next-like-this "mark-next-like-this")
+  ("a" mc/edit-beginnings-of-lines "edit-beginnings-of-lines")
+  ("e" mc/edit-ends-of-lines "edit-ends-of-lines")
+  ("m" mc/mark-all-like-this "mark-all-like-this"))
 
 ;;=========================================================================
 ;; Misc
