@@ -130,7 +130,7 @@ There are two things you can do about this warning:
  '(nyan-mode t)
  '(nyan-wavy-trail t)
  '(package-selected-packages
-   '(sly racket-mode phi-search iy-go-to-char ocamlformat auto-complete company-fuzzy fzf flycheck-popup-tip flycheck-pos-tip flycheck-status-emoji flycheck-eglot popper pulsar swiper-helm markdown-preview-mode blamer auto-package-update benchmark-init undo-tree esup helm-c-yasnippet yasnippet-snippets yasnippet helm-grepint consult-flycheck consult-embark embark consult catppuccin-theme powerline all-the-icons writegood-mode minimap hydra multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window use-package smex nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
+   '(fennel-mode sly racket-mode phi-search iy-go-to-char ocamlformat auto-complete company-fuzzy fzf flycheck-popup-tip flycheck-pos-tip flycheck-status-emoji flycheck-eglot popper pulsar swiper-helm markdown-preview-mode blamer auto-package-update benchmark-init undo-tree esup helm-c-yasnippet yasnippet-snippets yasnippet helm-grepint consult-flycheck consult-embark embark consult catppuccin-theme powerline all-the-icons writegood-mode minimap hydra multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window use-package smex nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
  '(pixel-scroll-mode nil)
  '(pixel-scroll-precision-interpolate-mice nil)
  '(pixel-scroll-precision-interpolate-page nil)
@@ -221,13 +221,14 @@ There are two things you can do about this warning:
   (set-mark (point))
   (end-of-line current-prefix-arg))
 
-(global-set-key (kbd "C-c C-z") #'zap-up-to-char)
+(global-set-key (kbd "C-c M-z") #'zap-up-to-char)
 (global-set-key (kbd "M-p") #'backward-paragraph)
 (global-set-key (kbd "M-n") #'forward-paragraph)
-(global-set-key (kbd "C-c C-d i") #'delete-inside-char)
-(global-set-key (kbd "C-c C-d p") #'delete-pair)
+(global-set-key (kbd "C-c d i") #'delete-inside-char)
+(global-set-key (kbd "C-c d p") #'delete-pair)
 (global-set-key (kbd "C-c c") #'dabbrev-expand)
 (global-set-key (kbd "C-c l") #'mark-line)
+(global-set-key (kbd "C-c M-f") #'forward-sexp)
 
 ;; Set up use-package for auto-installing packages
 (unless (package-installed-p 'use-package)
@@ -382,12 +383,17 @@ There are two things you can do about this warning:
   (bind-key "C-x b" 'helm-buffers-list)
   (bind-key "C-x C-f" 'helm-find-files)
   (bind-key "M-x" 'helm-M-x))
+
 (use-package helm-grepint
   :defer t
   :init
   (bind-key "C-c g" 'helm-grepint-grep-root)
   :config
   (helm-grepint-set-default-config-latest))
+
+(use-package helm-swoop
+  :defer t)
+
 (use-package swiper
   :bind
   (("C-s" . swiper-isearch)
@@ -532,7 +538,7 @@ There are two things you can do about this warning:
         company-fuzzy-trigger-symbols '("." "->" "<" "\"" "'" "@" "$")))
 
 (defun setup-lightweight-company ()
-  "Lightweight company setup for when completions are too slow."
+  "Lightweight company setup for when capf completions are too slow."
   (company-fuzzy-mode -1)
   (company-mode -1)
   (setq-local company-backends '((company-dabbrev-code company-dabbrev)))
@@ -672,19 +678,16 @@ There are two things you can do about this warning:
 
 ;; (set-face-background 'font-lock-comment-face "#fef3bd") ;; Highlight comments to make them more visible
 
-;; (use-package slime
-;;   :config
-;;   (setq inferior-lisp-program "sbcl")
-;;   (global-set-key (kbd "M-p") #'backward-paragraph)
-;;   (global-set-key (kbd "M-n") #'forward-paragraph))
+(setq inferior-lisp-program "sbcl")
 
 (use-package sly
   :hook
   (sly-editing-mode . company-fuzzy-mode)
   :config
-  (setq inferior-lisp-program "sbcl")
   (define-key sly-editing-mode-map (kbd "M-n") #'forward-paragraph)
   (define-key sly-editing-mode-map (kbd "M-p") #'backward-paragraph))
+
+(use-package fennel-mode)
 
 ;;=========================================================================
 ;; Hydras
