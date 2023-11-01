@@ -381,8 +381,11 @@ There are two things you can do about this warning:
   :config
   (bind-key "C-c C-h" 'helm-browse-project)
   (bind-key "C-x b" 'helm-buffers-list)
-  (bind-key "C-x C-f" 'helm-find-files)
-  (bind-key "M-x" 'helm-M-x))
+  (bind-key "C-x C-f" 'helm-find-files))
+
+(use-package smex
+  :bind
+  (("M-x" 'smex)))
 
 (use-package helm-grepint
   :defer t
@@ -531,7 +534,7 @@ There are two things you can do about this warning:
   (setq company-selection-wrap-around t))
 
 (use-package company-fuzzy
-  ;; :hook (company-mode . company-fuzzy-mode)
+  ; :hook (company-mode . company-fuzzy-mode)
   :init
   (setq company-fuzzy-sorting-backend 'flx
         company-fuzzy-prefix-on-top nil
@@ -554,6 +557,7 @@ There are two things you can do about this warning:
   ;; Bind dedicated completion commands
   ;; Alternative prefix keys: C-c p, M-p, M-+, ...
   :bind (("C-<return>" . completion-at-point)) ;; capf
+  :bind (("M-<return>" . completion-at-point))
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   ;; NOTE: The order matters!
@@ -674,20 +678,21 @@ There are two things you can do about this warning:
   (let* ((selection (popup-menu* (cl-remove-if (lambda (b) (or (string-prefix-p "*" (buffer-name b))(string-prefix-p " *" (buffer-name b)))) (buffer-list)))))
     (switch-to-buffer selection)))
 
-(bind-key "M-RET" 'buffer-list-popup)
+;; (bind-key "M-RET" 'buffer-list-popup)
 
 ;; (set-face-background 'font-lock-comment-face "#fef3bd") ;; Highlight comments to make them more visible
 
 (setq inferior-lisp-program "sbcl")
 
 (use-package sly
-  :hook
-  (sly-editing-mode . company-fuzzy-mode)
+  ;; :hook  
+  ;; (sly-editing-mode . company-fuzzy-mode)
   :config
   (define-key sly-editing-mode-map (kbd "M-n") #'forward-paragraph)
   (define-key sly-editing-mode-map (kbd "M-p") #'backward-paragraph))
 
-(use-package fennel-mode)
+(use-package fennel-mode
+  :autoload fennel-mode)
 
 ;;=========================================================================
 ;; Hydras
