@@ -137,7 +137,6 @@ There are two things you can do about this warning:
  '(powerline-default-separator nil)
  '(powerline-gui-use-vcs-glyph t)
  '(select-enable-clipboard t)
- '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(warning-suppress-types '((use-package) (comp) (comp))))
 (custom-set-faces
@@ -610,6 +609,7 @@ There are two things you can do about this warning:
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode) ;; Get line ruler column
 (add-hook 'prog-mode-hook 'fic-mode)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook 'show-paren-local-mode)
 
 (defun my-go-mode-hook ()
   "Custom go hooks."
