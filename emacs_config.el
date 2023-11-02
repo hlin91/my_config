@@ -385,7 +385,7 @@ There are two things you can do about this warning:
 
 (use-package smex
   :bind
-  (("M-x" 'smex)))
+  (("M-x" . smex)))
 
 (use-package helm-grepint
   :defer t
