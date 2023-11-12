@@ -734,6 +734,10 @@ There are two things you can do about this warning:
   ("b" popper-cycle-backwards "cycle-backward")
   ("k" popper-kill-latest-popup "kill-latest"))
 
+(defhydra hydra-xref (global-map "C-c x")
+  ("d" xref-find-definitions "find-definitions")
+  ("r" xref-find-references "find-references"))
+
 ;;=========================================================================
 ;; Misc
 ;;=========================================================================
