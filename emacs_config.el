@@ -228,6 +228,7 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-c c") #'dabbrev-expand)
 (global-set-key (kbd "C-c l") #'mark-line)
 (global-set-key (kbd "C-c M-f") #'forward-sexp)
+(global-set-key (kbd "C-<tab>") #'indent-rigidly-right-to-tab-stop)
 
 ;; Set up use-package for auto-installing packages
 (unless (package-installed-p 'use-package)
