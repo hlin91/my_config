@@ -532,7 +532,7 @@ There are two things you can do about this warning:
   (setq company-dabbrev-code-everywhere t)
   (setq company-dabbrev-code-ignore-case t)
   :config
-  (setq-local company-backends '((company-capf company-dabbrev-code company-dabbrev)))
+  (setq-local company-backends '((company-capf company-dabbrev-code company-dabbrev company-yasnippet)))
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 1)
   (setq company-selection-wrap-around t))
@@ -548,7 +548,7 @@ There are two things you can do about this warning:
   "Lightweight company setup for when capf completions are too slow."
   (company-fuzzy-mode -1)
   (company-mode -1)
-  (setq-local company-backends '((company-dabbrev-code company-dabbrev)))
+  (setq-local company-backends '((company-dabbrev-code company-dabbrev company-yasnippet)))
   (company-mode 1)
   (company-fuzzy-mode 1))
 
@@ -608,7 +608,7 @@ There are two things you can do about this warning:
   (flycheck-pos-tip-mode 1))
 
 (add-hook 'prog-mode-hook 'flycheck-mode)
-(add-hook 'prog-mode-hook 'yas-global-mode)
+(add-hook 'prog-mode-hook 'yas-minor-mode)
 (add-hook 'prog-mode-hook #'recentf-mode)
 (add-hook 'prog-mode-hook (lambda () (setq fill-column 140)))
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode) ;; Get line ruler column
