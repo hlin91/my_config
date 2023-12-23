@@ -445,6 +445,7 @@ There are two things you can do about this warning:
 (put 'dired-find-alternate-file 'disabled nil)
 
 (global-auto-revert-mode t)
+(global-subword-mode t)
 
 (use-package undo-tree
   :config
