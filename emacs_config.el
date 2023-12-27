@@ -395,7 +395,9 @@ There are two things you can do about this warning:
   (helm-grepint-set-default-config-latest))
 
 (use-package helm-swoop
-  :defer t)
+  :defer t
+  :bind
+  (("C-c C-s" . helm-swoop)))
 
 (use-package swiper
   :bind
