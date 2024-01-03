@@ -135,6 +135,7 @@ There are two things you can do about this warning:
  '(powerline-gui-use-vcs-glyph t)
  '(select-enable-clipboard t)
  '(tool-bar-mode nil)
+ '(undo-tree-enable-undo-in-region t)
  '(warning-suppress-types '((use-package) (comp) (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -213,7 +214,7 @@ There are two things you can do about this warning:
 (defun mark-line ()
   "Mark the current line."
   (interactive)
-  (beginning-of-line)
+  (back-to-indentation)
   (set-mark (point))
   (end-of-line current-prefix-arg))
 
