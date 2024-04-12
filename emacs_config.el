@@ -131,7 +131,7 @@ There are two things you can do about this warning:
  '(nyan-mode t)
  '(nyan-wavy-trail t)
  '(package-selected-packages
-   '(highlight-indent-guides goto-chg iedit fennel-mode sly racket-mode phi-search iy-go-to-char ocamlformat auto-complete company-fuzzy fzf flycheck-popup-tip flycheck-pos-tip flycheck-status-emoji flycheck-eglot popper pulsar swiper-helm markdown-preview-mode blamer auto-package-update benchmark-init undo-tree esup helm-c-yasnippet yasnippet-snippets yasnippet helm-grepint consult-flycheck consult-embark embark consult catppuccin-theme powerline all-the-icons writegood-mode minimap hydra multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window use-package smex nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
+   '(highlight-indent-guides goto-chg iedit fennel-mode sly racket-mode phi-search iy-go-to-char ocamlformat auto-complete company-fuzzy fzf flycheck-popup-tip flycheck-pos-tip flycheck-status-emoji flycheck-eglot popper pulsar swiper-helm markdown-preview-mode blamer auto-package-update benchmark-init undo-tree esup helm-grepint consult-flycheck consult-embark embark consult catppuccin-theme powerline all-the-icons writegood-mode minimap hydra multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window use-package smex nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
  '(powerline-default-separator 'utf-8)
  '(powerline-gui-use-vcs-glyph t)
  '(select-enable-clipboard t)
@@ -198,20 +198,6 @@ There are two things you can do about this warning:
 (tool-bar-mode -1)
 (setq byte-compile-warnings '(cl-functions))
 
-(defun delete-inside-char (char)
-  "Delete content between the specified CHAR."
-  (interactive (list (read-char-from-minibuffer "Delete inside CHAR: "
-                                                nil 'read-char-history)))
-  (search-backward (string char))
-
-  (let ((delete-inside-sexp (lambda () (let ((beg (+ (point) 1))) (forward-sexp) (delete-region beg (- (point) 1)) (backward-char)))))
-   (cond
-   ((equal char ?\[) (funcall delete-inside-sexp))
-   ((equal char ?\() (funcall delete-inside-sexp))
-   ((equal char ?{) (funcall delete-inside-sexp))
-   ((equal char ?<) (funcall delete-inside-sexp))
-   (t (progn (forward-char) (zap-up-to-char 1 char))))))
-
 (defun mark-line ()
   "Mark the current line."
   (interactive)
@@ -219,16 +205,54 @@ There are two things you can do about this warning:
   (set-mark (point))
   (end-of-line current-prefix-arg))
 
+(defun delete-inside-char (char)
+  "Delete content between the specified CHAR."
+  (interactive (list (read-char-from-minibuffer "Delete inside CHAR: "
+                                                nil 'read-char-history)))
+  
+  (if (null (search-backward (string char) (line-beginning-position) t))
+      (progn
+        (back-to-indentation)
+        (search-forward (string char))
+        (backward-char)))
+
+  (let ((delete-inside-sexp (lambda () (let ((beg (+ (point) 1))) (forward-sexp) (delete-region beg (- (point) 1)) (backward-char)))))
+   (funcall delete-inside-sexp)))
+
+(defun mark-inside-char (char)
+  "Mark content between specified CHAR"
+  (interactive (list (read-char-from-minibuffer "Mark inside CHAR: "
+                                                nil 'read-char-history)))
+  
+  (if (null (search-backward (string char) (line-beginning-position) t))
+      (progn
+        (back-to-indentation)
+        (search-forward (string char))
+        (backward-char)))
+
+  (let ((mark-inside-sexp (lambda () (progn (mark-sexp) (forward-char) (exchange-point-and-mark) (backward-char)))))
+    (funcall mark-inside-sexp)))
+
 (global-set-key (kbd "C-c M-z") #'zap-up-to-char)
 (global-set-key (kbd "M-p") #'backward-paragraph)
 (global-set-key (kbd "M-n") #'forward-paragraph)
-(global-set-key (kbd "C-c d i") #'delete-inside-char)
-(global-set-key (kbd "C-c d p") #'delete-pair)
+(global-set-key (kbd "C-c d p") (lambda () (interactive) (delete-inside-char ?\()))
+(global-set-key (kbd "C-c d b") (lambda () (interactive) (delete-inside-char ?\[)))
+(global-set-key (kbd "C-c d s") (lambda () (interactive) (delete-inside-char ?\")))
+(global-set-key (kbd "C-c d q") (lambda () (interactive) (delete-inside-char ?\')))
+(global-set-key (kbd "C-c d d") (lambda () (interactive) (delete-inside-char ?\{)))
+(global-set-key (kbd "C-c d m") #'delete-pair)
+(global-set-key (kbd "C-c m p") (lambda () (interactive) (mark-inside-char ?\()))
+(global-set-key (kbd "C-c m b") (lambda () (interactive) (mark-inside-char ?\[)))
+(global-set-key (kbd "C-c m s") (lambda () (interactive) (mark-inside-char ?\")))
+(global-set-key (kbd "C-c m q") (lambda () (interactive) (mark-inside-char ?\')))
+(global-set-key (kbd "C-c m d") (lambda () (interactive) (mark-inside-char ?\{)))
 (global-set-key (kbd "C-c c") #'dabbrev-expand)
 (global-set-key (kbd "C-c l") #'mark-line)
 (global-set-key (kbd "C-c M-f") #'forward-sexp)
 (global-set-key (kbd "C-<tab>") #'indent-rigidly-right-to-tab-stop)
 (global-set-key (kbd "C-c DEL") #'switch-to-prev-buffer)
+(global-set-key (kbd "C-c i") #'delete-inside-char)
 
 ;; Set up use-package for auto-installing packages
 (unless (package-installed-p 'use-package)
@@ -267,24 +291,6 @@ There are two things you can do about this warning:
 (use-package catppuccin-theme
   :defer t)
 
-(defun set-frame-size-according-to-resolution ()
-  (interactive)
-  (if (display-graphic-p (selected-frame))
-  (progn
-    ;; use 120 char wide window for largeish displays
-    ;; and smaller 80 column windows for smaller displays
-    ;; pick whatever numbers make sense for you
-    (if (> (x-display-pixel-width) 1280)
-           (add-to-list 'default-frame-alist (cons 'width 240))
-           (add-to-list 'default-frame-alist (cons 'width 100)))
-    ;; for the height, subtract a couple hundred pixels
-    ;; from the screen height (for panels, menubars and
-    ;; whatnot), then divide by the height of a char to
-    ;; get the height we want
-    (add-to-list 'default-frame-alist
-         (cons 'height (/ (- (x-display-pixel-height) 400)
-                          (frame-char-height)))))))
-
 (use-package nyan-mode
   :if (display-graphic-p))
 
@@ -292,17 +298,17 @@ There are two things you can do about this warning:
   :if (display-graphic-p))
 
 (defun set-up-window ()
-  "Configurations specific to windowed mode."
+  "Set up Emacs with configurations for terminal or GUI."
   (load-theme 'doom-material-dark)
   (nyan-mode)
   (powerline-default-theme)
   
   (if (display-graphic-p (selected-frame))
+      ;; "Configurations specific to windowed mode."
       (progn
         (setq select-enable-clipboard 1)
-        ;; (set-frame-font "comic code ligatures:size=18")
-        (set-frame-font "sf mono:size=18")
-        (set-frame-size-according-to-resolution))
+        (set-background-color "#012456")
+        (set-frame-font "bitstream vera sans mono:size=18"))
     (progn
       (set-face-background 'default "unspecified-bg" (selected-frame))
       (set-face-background 'line-number "unspecified-bg" (selected-frame))
@@ -336,12 +342,6 @@ There are two things you can do about this warning:
   (("M-o" . ace-window)
    ("C-c M-o" . ace-delete-window)))
 
-(use-package neotree
-  :bind
-  (("C-c C-n" . neotree-toggle))
-  :custom
-  (neo-smart-open t))
-
 (global-set-key (kbd "C-c C-k") #'comment-or-uncomment-region)
 
 (use-package avy
@@ -373,8 +373,7 @@ There are two things you can do about this warning:
   :config
   (bind-key "C-c C-h" 'helm-browse-project)
   (bind-key "C-x b" 'helm-buffers-list)
-  (bind-key "C-x C-f" 'helm-find-files)
-  (bind-key "C-c i" 'helm-imenu-in-all-buffers))
+  (bind-key "C-x C-f" 'helm-find-files))
 
 (use-package smex
   :bind
@@ -478,17 +477,17 @@ There are two things you can do about this warning:
         (python-mode . python-ts-mode)
         ))
 
-(use-package yasnippet
-  :autoload
-  ((yas-global-mode)
-   (yas-minor-mode)))
-(use-package yasnippet-snippets
-  :autoload
-  ((yas-global-mode)
-   (yas-minor-mode)))
-(use-package helm-c-yasnippet
-  :bind
-  (("C-c y" . helm-yas-complete)))
+;; (use-package yasnippet
+;;   :autoload
+;;   ((yas-global-mode)
+;;    (yas-minor-mode)))
+;; (use-package yasnippet-snippets
+;;   :autoload
+;;   ((yas-global-mode)
+;;    (yas-minor-mode)))
+;; (use-package helm-c-yasnippet
+;;   :bind
+;;   (("C-c y" . helm-yas-complete)))
 
 (use-package multiple-cursors
   :defer t)
@@ -515,14 +514,6 @@ There are two things you can do about this warning:
 (setq c-basic-offset 4)
 
 (use-package indent-guide)
-
-;; ycmd
-;; (use-package ycmd
-;;   :hook
-;;   (prog-mode . ycmd-mode)
-;;   :config
-;;   (set-variable 'ycmd-server-command `("python3" "-u" ,(file-truename "~/Repos/ycmd/ycmd"))))
-;; (use-package company-ycmd)
 
 ;; Company mode auto completion settings
 (use-package company
@@ -670,16 +661,10 @@ There are two things you can do about this warning:
 (use-package racket-mode
   :autoload racket-mode)
 
-(use-package popup)
+(use-package lua-mode
+  :autoload lua-mode)
 
-;; (defun harpoon-popup ()
-;;   "Display harpoon candidates using popup."
-;;   (interactive)
-;;   (let* ((selection (popup-menu* (delete "" (split-string (harpoon--get-file-text) "\n"))))
-;;          (full-file-name (concat (harpoon-project-root-function) selection)))
-;;     (if (file-exists-p full-file-name)
-;;         (find-file full-file-name)
-;;       (message (concat full-file-name " not found.")))))
+(use-package popup)
 
 (defun buffer-list-popup ()
   "Switch between buffers using popup."
@@ -713,14 +698,6 @@ There are two things you can do about this warning:
   ("l" smerge-keep-lower "keep-lower")
   ("a" smerge-keep-all "keep-all")
   ("n" smerge-next "next"))
-
-(defhydra hydra-window-resize (global-map "C-c w")
-  ("w" enlarge-window "grow-vertically")
-  ("s" shrink-window "shrink-vertically")
-  ("d" enlarge-window-horizontally "grow-horizontally")
-  ("a" shrink-window-horizontally "shrink-horizontally")
-  ("p" scroll-other-window-down "scroll-other-window-down")
-  ("n" scroll-other-window "scroll-other-window"))
 
 (defhydra hydra-mc (global-map "C-c m")
   ("p" mc/mark-previous-like-this "mark-previous-like-this")
@@ -769,16 +746,6 @@ There are two things you can do about this warning:
   :init (setq markdown-command "multimarkdown")
   :bind (:map markdown-mode-map
          ("C-c C-e" . markdown-do)))
-
-;; Artist mode shortcuts
-(add-hook 'artist-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "<f15>") 'org-mode)
-	    (local-set-key (kbd "<f16>") 'artist-select-op-pen-line) ; f16 = pen mode
-            (local-set-key (kbd "<f17>") 'artist-select-op-line)     ; f17 = line
-	    (local-set-key (kbd "<f18>") 'artist-select-op-square)   ; f18 = rectangle
-	    (local-set-key (kbd "<f19>") 'artist-select-op-ellipse)  ; f19 = ellipse
-	    (local-set-key (kbd "C-z") 'undo)))
 
 (provide '.emacs_config)
 
