@@ -518,7 +518,7 @@ There are two things you can do about this warning:
   (setq company-selection-wrap-around t))
 
 (use-package company-fuzzy
-  ; :hook (company-mode . company-fuzzy-mode)
+  ;; :hook (company-mode . company-fuzzy-mode)
   :init
   (setq company-fuzzy-sorting-backend 'flx
         company-fuzzy-prefix-on-top nil
@@ -528,7 +528,7 @@ There are two things you can do about this warning:
   "Lightweight company setup for when capf completions are too slow."
   (company-fuzzy-mode -1)
   (company-mode -1)
-  (setq-local company-backends '((company-dabbrev-code company-dabbrev company-yasnippet)))
+  (setq-local company-backends '((company-dabbrev-code company-dabbrev)))
   (company-mode 1)
   (company-fuzzy-mode 1))
 
@@ -540,8 +540,7 @@ There are two things you can do about this warning:
 (use-package cape
   ;; Bind dedicated completion commands
   :bind
-  (("C-<RET>" . completion-at-point)
-   ("M-<RET>" . completion-at-point)) ;; capf
+  (("M-<RET>" . completion-at-point)) ;; capf
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   ;; NOTE: The order matters!
@@ -614,7 +613,7 @@ There are two things you can do about this warning:
   :autoload gdscript-mode
   :hook
   (gdscript-mode . eglot-ensure)
-  ;; (gdscript-mode . setup-lightweight-company) ; Because Godot's LSP server is insanely slow. Remove once LSP fix is out
+  (gdscript-mode . setup-lightweight-company) ; Because Godot's LSP server is slow and does not give many suggestions
   :config
   (setq gdscript-godot-executable "/usr/bin/godot4")
   (keymap-unset gdscript-mode-map "C-c i" t)
