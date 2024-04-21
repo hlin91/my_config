@@ -130,7 +130,7 @@ There are two things you can do about this warning:
  '(nyan-animation-frame-interval 0.1)
  '(nyan-wavy-trail t)
  '(package-selected-packages
-   '(highlight-indent-guides goto-chg iedit fennel-mode sly racket-mode phi-search iy-go-to-char ocamlformat auto-complete company-fuzzy fzf flycheck-popup-tip flycheck-pos-tip flycheck-status-emoji flycheck-eglot popper pulsar swiper-helm markdown-preview-mode blamer auto-package-update benchmark-init undo-tree esup helm-grepint consult-flycheck consult-embark embark consult catppuccin-theme powerline all-the-icons writegood-mode minimap hydra multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window use-package smex nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
+   '(flx cape corfu highlight-indent-guides goto-chg iedit fennel-mode sly racket-mode phi-search iy-go-to-char ocamlformat auto-complete company-fuzzy fzf flycheck-popup-tip flycheck-pos-tip flycheck-status-emoji flycheck-eglot popper pulsar swiper-helm markdown-preview-mode blamer auto-package-update benchmark-init undo-tree esup helm-grepint consult-flycheck consult-embark embark consult catppuccin-theme powerline all-the-icons writegood-mode minimap hydra multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window use-package smex nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell indent-guide neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
  '(powerline-default-separator 'utf-8)
  '(powerline-gui-use-vcs-glyph t)
  '(select-enable-clipboard t)
@@ -474,18 +474,6 @@ There are two things you can do about this warning:
         (python-mode . python-ts-mode)
         ))
 
-;; (use-package yasnippet
-;;   :autoload
-;;   ((yas-global-mode)
-;;    (yas-minor-mode)))
-;; (use-package yasnippet-snippets
-;;   :autoload
-;;   ((yas-global-mode)
-;;    (yas-minor-mode)))
-;; (use-package helm-c-yasnippet
-;;   :bind
-;;   (("C-c y" . helm-yas-complete)))
-
 (use-package multiple-cursors
   :defer t)
 
@@ -563,26 +551,6 @@ There are two things you can do about this warning:
   )
 
 (use-package flx)
-
-;; (use-package dap-mode
-;;   :defer t
-;;   :hook (dap-mode . dap-ui-mode)
-;;   :config
-;;   (add-hook 'dap-stopped-hook
-;;             (lambda (arg) (call-interactively #'dap-hydra)))
-;;   (dap-register-debug-provider
-;;    "gdscript"
-;;    (lambda (conf)
-;;      (plist-put conf :debugServer "6006")
-;;      (plist-put conf :debugPort "6006")
-;;      (plist-put conf :host "localhost")
-;;      conf))
-;;   (dap-register-debug-template "Project Skylight"
-;;                                (list :type "gdscript"
-;;                                      :request "launch"
-;;                                      :port "6006"
-;;                                      :name "Project Skylight4.0")))
-
 (use-package flycheck
   :autoload flycheck-mode)
 (use-package fic-mode
@@ -597,7 +565,6 @@ There are two things you can do about this warning:
  (flycheck-status-emoji-mode 1))
 
 (add-hook 'prog-mode-hook 'flycheck-mode)
-(add-hook 'prog-mode-hook 'yas-minor-mode)
 (add-hook 'prog-mode-hook #'recentf-mode)
 (add-hook 'prog-mode-hook (lambda () (setq fill-column 100)))
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode) ;; Get line ruler column
