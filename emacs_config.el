@@ -124,7 +124,7 @@
  '(nyan-animation-frame-interval 0.1)
  '(nyan-wavy-trail t)
  '(package-selected-packages
-   '(corfu-terminal magit move-text almost-mono-themes helm-projectile fzf flx cape corfu goto-chg iedit fennel-mode sly racket-mode phi-search iy-go-to-char ocamlformat auto-complete company-fuzzy flycheck-popup-tip flycheck-pos-tip flycheck-eglot popper pulsar swiper-helm markdown-preview-mode blamer auto-package-update benchmark-init undo-tree esup helm-grepint consult-flycheck consult-embark embark consult catppuccin-theme writegood-mode minimap hydra multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window use-package smex nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
+   '(orderless corfu-terminal magit move-text almost-mono-themes helm-projectile fzf flx cape corfu goto-chg iedit fennel-mode sly racket-mode phi-search iy-go-to-char ocamlformat auto-complete company-fuzzy flycheck-popup-tip flycheck-pos-tip flycheck-eglot popper pulsar swiper-helm markdown-preview-mode blamer auto-package-update benchmark-init undo-tree esup helm-grepint consult-flycheck consult-embark embark consult catppuccin-theme writegood-mode minimap hydra multiple-cursors ewal-doom-themes ewal-spacemacs-themes helm emacs-async gdscript-mode ewal rainbow-mode git-gutter qml-mode projectile leuven-theme doom-themes rust-mode rainbow-delimiters ace-window use-package smex nyan-mode go-playground gotest go-errcheck bongo vterm swoop helm-swoop helm-ag elcord flycheck-google-cpplint flycheck-golangci-lint company exec-path-from-shell neotree go-mode atom-one-dark-theme lua-mode latex-preview-pane auctex fic-mode smooth-scrolling flycheck))
  '(select-enable-clipboard t)
  '(undo-tree-enable-undo-in-region t)
  '(warning-suppress-types '((use-package) (comp) (comp))))
@@ -444,6 +444,7 @@
   (("C-c p" . popper-toggle-latest)))
 
 (use-package goto-chg
+  :defer t
   :bind
   (("M-," . 'goto-last-change)))
 
@@ -507,6 +508,12 @@
   :defer t
   :config (exec-path-from-shell-initialize))
 
+(use-package orderless
+  :defer t)
+
+(use-package flx
+  :defer t)
+
 ;; Company mode auto completion settings
 (use-package company
   :autoload company-mode
@@ -524,6 +531,7 @@
 
 (use-package company-fuzzy
   ;; :hook (company-mode . company-fuzzy-mode)
+  :after (company)
   :init
   (setq company-fuzzy-sorting-backend 'flx
         company-fuzzy-prefix-on-top nil
@@ -537,18 +545,10 @@
   (company-mode 1)
   (company-fuzzy-mode 1))
 
-;; Use corfu to manually trigger completion with capf functions (since they may be laggy)
-(use-package corfu
-  :defer t
-  :config
-  (global-corfu-mode 1))
-
-(use-package corfu-terminal
-  :defer t
-  :config
-  (corfu-terminal-mode 1))
+;; Use cape and corfu to manually trigger completion with capf functions (since they may be laggy)
 
 (use-package cape
+  :defer t
   ;; Bind dedicated completion commands
   :bind
   (("M-<RET>" . completion-at-point)) ;; capf
@@ -560,7 +560,15 @@
   ;; (add-to-list 'completion-at-point-functions #'cape-file)
   )
 
-(use-package flx)
+(use-package corfu
+  :defer t
+  :hook
+  (prog-mode . corfu-mode))
+
+(use-package corfu-terminal
+  :defer t
+  :hook
+  (corfu-mode . corfu-terminal-mode))
 
 (use-package flycheck
   :autoload flycheck-mode)
@@ -640,15 +648,12 @@
   (let* ((selection (popup-menu* (cl-remove-if (lambda (b) (or (string-prefix-p "*" (buffer-name b))(string-prefix-p " *" (buffer-name b)))) (buffer-list)))))
     (switch-to-buffer selection)))
 
-;; (bind-key "M-RET" 'buffer-list-popup)
-
 ;; (set-face-background 'font-lock-comment-face "#fef3bd") ;; Highlight comments to make them more visible
 
 (setq inferior-lisp-program "sbcl --dynamic-space-size 1024")
 
 (use-package sly
   ;; :hook
-  ;; (sly-editing-mode . company-fuzzy-mode)
   :autoload (sly-mode)
   :config
   (keymap-unset sly-editing-mode-map "M-p" t)

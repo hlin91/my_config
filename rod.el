@@ -18,7 +18,8 @@
 (defun rod--set-slot (slot)
   "Set the given slot in the buffer list with the current buffer name.
 SLOT: the slot to set."
-  (aset rod-buffer-list slot (buffer-name)))
+  (aset rod-buffer-list slot (buffer-name))
+  (message "Set %s to slot %d" (buffer-name) (+ 1 slot)))
 
 (defun rod--go-to-slot (slot)
   "Go to the buffer, if any, stored in the slot.
@@ -26,7 +27,7 @@ SLOT: the slot containing the buffer to go to."
   (let ((buf-name (aref rod-buffer-list slot)))
     (if (or (not (stringp buf-name))
          (string-empty-p buf-name))
-        (error "Slot %d is empty" slot)
+        (error "Slot %d is empty" (+ 1 slot))
       (switch-to-buffer buf-name nil t))))
 
 ;;;###autoload
