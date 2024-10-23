@@ -8,10 +8,12 @@ EndOfLine[$d]
 ForwardWord[$d]
 KisAssistantTool=Shift+A
 KisToolSelectOutline=L
-KritaFill/KisToolFill=none
+KritaFill/KisToolFill=Ctrl+F
 KritaFill/KisToolGradient=none
 KritaSelected/KisToolColorSampler=none
-KritaShape/KisToolBrush=P
+KritaShape/KisToolBrush=P; Q
+KritaShape/KisToolMultiBrush=none
+KritaShape/KisToolRectangle=none
 KritaTransform/KisToolMove=none
 New[$d]
 Print[$d]
@@ -23,10 +25,11 @@ ToolReferenceImages=R
 ZoomTool=M
 convert-to-path=none
 edit_undo=Z
+filter_apply_again=none
 increase_opacity=none
 make_brush_color_lighter=none
 mirrorImageHorizontal=Shift+H
-mirror_canvas=H
+mirror_canvas=H; T
 next_favorite_preset=none
 next_frame=.
 pathsegment-line=none
@@ -34,6 +37,7 @@ preserve_alpha=A
 previous_favorite_preset=none
 previous_frame=,
 previous_preset=none
+reset_canvas_rotation=Shift+R
 reset_fg_bg=none
 show_color_history=none
 toggle_onion_skin=O
