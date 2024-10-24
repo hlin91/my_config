@@ -12,15 +12,15 @@ titlebar_border_thickness 1
 titlebar_padding 1
 default_border pixel 3
 
-shadows enable
-shadow_blur_radius 15
-shadow_offset 0 0
-shadow_color #5a5973
-corner_radius 0
+# shadows enable
+# shadow_blur_radius 15
+# shadow_offset 0 0
+# shadow_color #5a5973
+# corner_radius 0
 
-layer_effects "gtk-layer-shell" shadows enable
+# layer_effects "gtk-layer-shell" shadows enable
 # layer_effects "notifications" shadows enable
-layer_effects "waybar" shadows enable
+# layer_effects "waybar" shadows enable
 
 ### Variables
 #
@@ -33,7 +33,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term 'kitty --single-instance'
+set $term 'footclient'
 
 ### Background processes
 
@@ -41,6 +41,7 @@ exec fcitx5
 exec gentoo-pipewire-launcher restart
 exec mako
 exec waybar
+exec foot --server
 
 seat seat0 xcursor_theme 'breeze light' 24
 

@@ -5,7 +5,7 @@
 
 background-color=#fef5e6
 text-color=#434356
-border-color=#B3404B
+border-color=#b3404b
 font=Ark Pixel 12px Monospaced ja 19
 border-radius=0
 anchor=top-right
@@ -14,9 +14,9 @@ margin=15
 [urgency=low]
 background-color=#fef5e6
 text-color=#b48d65
-border-color=#B3404B
+border-color=#b3404b
 
 [urgency=high]
 background-color=#fef5e6
-text-color=#B3404B
-border-color=#B3404B
+text-color=#b3404b
+border-color=#b3404b

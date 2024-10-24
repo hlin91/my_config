@@ -31,3 +31,9 @@ end = "/* End flavours */"
 file = "~/.config/alacritty/flavours.toml"
 template = "alacritty"
 rewrite = true
+
+[[items]]
+file = "~/.config/foot/foot.ini"
+template = "foot"
+start = "## Start flavours ##"
+end = "## End flavours ##"
